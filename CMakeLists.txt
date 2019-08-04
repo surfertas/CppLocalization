@@ -13,7 +13,11 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/lib)
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-find_package(OpenCV REQUIRED)
+find_package(OpenCV REQUIRED
+NO_MODULE
+PATHS /usr/local
+NO_DEFAULT_PATH)
+
 include_directories(OpenCV_INCLUDE_DIR)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 

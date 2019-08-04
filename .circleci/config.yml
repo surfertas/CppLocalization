@@ -29,7 +29,7 @@ jobs:
 
       - run:
             name: Current Dir
-            command: 'cd ./build && ls'
+            command: 'cd ./build/bin && ls'
       - run:
           name: UKF Unit Testing
           command: './build/bin/ukftest'

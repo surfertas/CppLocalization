@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: nuveo/opencv:debian-python3-opencv2
+      - image: hulkinbrain/docker-opencv2
 
     steps:
       - checkout

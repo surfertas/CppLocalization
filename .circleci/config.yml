@@ -23,7 +23,7 @@ jobs:
 
       - run:
           name: Install Eigen3
-          command: 'apt -y install libeigen3-dev'
+          command: 'apt-get update && apt -y install libeigen3-dev'
 
       - run:
           name: Creating Build Files

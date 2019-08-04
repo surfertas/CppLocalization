@@ -40,5 +40,8 @@ jobs:
           command: 'cmake .'
 
       - run:
+            name: Current Dir
+            command: 'ls'
+      - run:
           name: UKF Unit Testing
           command: './build/bin/ukftest'

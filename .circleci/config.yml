@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: jjanzic/docker-python3-opencv
+      - image: nuveo/opencv:debian-python3-opencv2
 
     steps:
       - checkout

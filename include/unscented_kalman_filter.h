@@ -3,10 +3,11 @@
 #define UNSCENTED_KALMAN_FILTER_H
 
 #include <iostream>
+#include <functional>
 #include <random>
 #include <cmath>
 #include <Eigen/Eigen>
-#include <opencv2/opencv.hpp>
+//#include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 

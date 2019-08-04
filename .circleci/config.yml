@@ -36,4 +36,4 @@ jobs:
             command: 'cd ./build/bin && ls'
       - run:
           name: UKF Unit Testing
-          command: './build/bin/ukftest --gtest_filter=UKFTest.-*Simulation*'
+          command: './build/bin/ukftest --gtest_filter=-UKFTest.*Simulation*'

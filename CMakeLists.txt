@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 project(cpp_localization)
 
 set(CMAKE_CXX_STANDARD 11)
-# set(CMAKE_BUILD_TYPE Debug)
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/build/lib)
 
@@ -16,7 +16,7 @@ include_directories(${EIGEN3_INCLUDE_DIR})
 find_package(OpenCV REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-include_directories(./include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 ##############################
 #Localization

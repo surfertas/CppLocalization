@@ -24,20 +24,8 @@ jobs:
           command: 'apt -y install libeigen3-dev'
 
       - run:
-            name: Current Dir
-            command: 'pwd'
-
-      - run:
-          name:
-          command: 'cd ./build'
-
-      - run:
-            name: Current Dir
-            command: 'pwd'
-
-      - run:
           name: Creating Build Files
-          command: 'cmake .'
+          command: 'cd ./build && cmake ..'
 
       - run:
             name: Current Dir

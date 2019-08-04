@@ -20,12 +20,20 @@ jobs:
           command: 'apt-get update && sudo apt-get install -y cmake'
 
       - run:
+            name: Current Dir
+            command: 'pwd'
+
+      - run:
           name:
           command: 'cd ./build'
 
       - run:
+            name: Current Dir
+            command: 'pwd'
+
+      - run:
           name: Creating Build Files
-          command: 'cd .. && cmake .'
+          command: 'cmake .'
 
       - run:
           name: UKF Unit Testing

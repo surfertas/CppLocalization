@@ -1,6 +1,6 @@
-[![CircleCI](https://circleci.com/gh/surfertas/CppLocalization.svg?style=svg)](https://circleci.com/gh/surfertas/CppLocalization)
-
-
+.. image:: https://circleci.com/gh/surfertas/CppLocalization.svg?style=svg
+    :target: https://circleci.com/gh/surfertas/CppLocalization
+    
 CppLocalization: filters and slam algorithms implemented in C++
 ========
 

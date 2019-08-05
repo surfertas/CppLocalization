@@ -18,26 +18,30 @@ class MerweScaledSigmaPoints {
 
 public:
   MerweScaledSigmaPoints(
-    uint const n,
-    double const alpha,
-    double const beta,
-    double const kappa,
-    std::function<Eigen::VectorXd(Eigen::VectorXd const&, Eigen::VectorXd const&)> subtract_fn
+    uint const t_n,
+    double const t_alpha,
+    double const t_beta,
+    double const t_kappa,
+    std::function<Eigen::VectorXd(Eigen::VectorXd const&, Eigen::VectorXd const&)> t_subtract_fn
   );
 
-  uint n;
-  double alpha;
-  double beta;
-  double kappa;
-  Eigen::VectorXd Wm;  // Weight for each sigma point for the mean
-  Eigen::VectorXd Wc;  // Weight for each sigma point for the covariance
-  std::function<Eigen::VectorXd(Eigen::VectorXd const&, Eigen::VectorXd const&)> subtract_fn_;
-
   uint num_sigmas() const;
+  Eigen::VectorXd get_wm() const;
+  Eigen::VectorXd get_wc() const;
 
   // Computes the sigma points for an Unscented Kalman Filter given the mean and covariance.
   // Returns a (2*n+1, n) dimension matrix containing the sigma points.
   Eigen::MatrixXd sigma_points(Eigen::VectorXd const& t_x, Eigen::MatrixXd const& t_P);
+  std::function<Eigen::VectorXd(Eigen::VectorXd const&, Eigen::VectorXd const&)> subtract_fn;
+
+
+private:
+  uint m_n;
+  double m_alpha;
+  double m_beta;
+  double m_kappa;
+  Eigen::VectorXd m_Wm;  // Weight for each sigma point for the mean
+  Eigen::VectorXd m_Wc;  // Weight for each sigma point for the covariance
 };
 
 class UnscentedKalmanFilter {

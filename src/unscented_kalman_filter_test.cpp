@@ -231,7 +231,7 @@ TEST(UKFTest, SigmaPointsTest) {
                     0., 0., 0., -0.0020;
 
   ASSERT_TRUE((sigmas - sigmas_expected).norm() < 1e-5);
-  ASSERT_TRUE(std::abs(points.Wm.sum()-1.) < 1e-5);
+  ASSERT_TRUE(std::abs(points.get_wm().sum()-1.) < 1e-5);
 }
 
 
@@ -241,7 +241,7 @@ TEST(UKFTest, ComputeWeightsTest) {
   auto beta = 2.0;
   auto kappa = 0.0;
   auto points = ukf::MerweScaledSigmaPoints(n, alpha, beta, kappa, ukf::subtract_fn);
-  auto wm = points.Wm;
+  auto wm = points.get_wm();
 
   Eigen::Matrix<double,5,1> wm_expected;
   wm_expected << -999998.9999712,
@@ -274,7 +274,7 @@ TEST(UKFTest, UnscentedTransformTest) {
 
   auto sigmas = points.sigma_points(x, P);
 
-  auto pair = ukf::unscented_transform(sigmas, points.Wm, points.Wc, noise_cov, ukf::residuals, ukf::mean_fn);
+  auto pair = ukf::unscented_transform(sigmas, points.get_wm(), points.get_wc(), noise_cov, ukf::residuals, ukf::mean_fn);
 
   ASSERT_TRUE((std::get<0>(pair) - x).norm() < 1e-5);
   ASSERT_TRUE((std::get<1>(pair) - P).norm() < 1e-5);

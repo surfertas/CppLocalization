@@ -8,55 +8,63 @@ namespace ukf
 {
 
 MerweScaledSigmaPoints::MerweScaledSigmaPoints(
-    uint const n,
-    double const alpha,
-    double const beta,
-    double const kappa,
-    std::function<Eigen::VectorXd(Eigen::VectorXd const&, Eigen::VectorXd const&)> subtract_fn)
-: n(n),
-  alpha(alpha),
-  beta(beta),
-  kappa(kappa),
-  subtract_fn_(subtract_fn)
+    uint const t_n,
+    double const t_alpha,
+    double const t_beta,
+    double const t_kappa,
+    std::function<Eigen::VectorXd(Eigen::VectorXd const&, Eigen::VectorXd const&)> t_subtract_fn)
+: m_n(t_n),
+  m_alpha(t_alpha),
+  m_beta(t_beta),
+  m_kappa(t_kappa),
+  subtract_fn(t_subtract_fn)
 {
-  double lambda = (alpha*alpha) * (n+kappa) - n;
-  double c = 0.5 / (n+lambda);
+  double lambda = (m_alpha*m_alpha) * (m_n+m_kappa) - m_n;
+  double c = 0.5 / (m_n+lambda);
 
   // The sum of Wm should be 1.
   // The sum of Wc should ~4.
   // http://users.isy.liu.se/rt/fredrik/edu/sensorfusion/lecture5.pdf
-  Wc = Eigen::VectorXd::Zero(2*n+1).array() + c;
-  Wm = Eigen::VectorXd::Zero(2*n+1).array() + c;
-  Wc(0) = lambda / (n+lambda) + (1-(alpha*alpha)+beta);
-  Wm(0) = lambda / (n+lambda);
+  m_Wc = Eigen::VectorXd::Zero(2*m_n+1).array() + c;
+  m_Wm = Eigen::VectorXd::Zero(2*m_n+1).array() + c;
+  m_Wc(0) = lambda / (m_n+lambda) + (1-(m_alpha*m_alpha)+m_beta);
+  m_Wm(0) = lambda / (m_n+lambda);
 }
 
 
 uint MerweScaledSigmaPoints::num_sigmas() const
 {
-  return 2*n + 1;
+  return 2*m_n + 1;
 }
 
+Eigen::VectorXd MerweScaledSigmaPoints::get_wm() const
+{
+  return m_Wm;
+}
+Eigen::VectorXd MerweScaledSigmaPoints::get_wc() const
+{
+  return m_Wc;
+}
 
 Eigen::MatrixXd MerweScaledSigmaPoints::sigma_points(
   Eigen::VectorXd const& t_x,
   Eigen::MatrixXd const& t_P)
 {
-  if (t_x.size()!=n) {
-    throw std::string("Expected size(x): "+std::to_string(n));
+  if (t_x.size()!=m_n) {
+    throw std::string("Expected size(x): "+std::to_string(m_n));
   }
 
-  double lambda = (alpha*alpha) * (n+kappa) - n;
+  double lambda = (m_alpha*m_alpha) * (m_n+m_kappa) - m_n;
 
   // Use cholesky decomposition.
-  Eigen::MatrixXd L = ((lambda+n) * t_P).llt().matrixL();
-  Eigen::MatrixXd sigmas = Eigen::MatrixXd::Zero(2*n+1, n);
+  Eigen::MatrixXd L = ((lambda+m_n) * t_P).llt().matrixL();
+  Eigen::MatrixXd sigmas = Eigen::MatrixXd::Zero(2*m_n+1, m_n);
 
   sigmas.row(0) = t_x;
-  for (auto i=0; i<n; ++i) {
+  for (auto i=0; i<m_n; ++i) {
     // Need to address subtraction when dealing with angles.
-    sigmas.row(i+1) =  subtract_fn_(t_x, -1.0*L.col(i));
-    sigmas.row(n+i+1) = subtract_fn_(t_x, L.col(i));
+    sigmas.row(i+1) =  subtract_fn(t_x, -1.0*L.col(i));
+    sigmas.row(m_n+i+1) = subtract_fn(t_x, L.col(i));
   }
   return sigmas;
 }
@@ -87,8 +95,8 @@ UnscentedKalmanFilter::UnscentedKalmanFilter(
   mean_fn_z_(mean_fn_z)
 {
 
-  Wm = points.Wm;
-  Wc = points.Wc;
+  Wm = points.get_wm();
+  Wc = points.get_wc();
 
   x = Eigen::VectorXd::Zero(dim_x_);
   P = Eigen::MatrixXd::Identity(dim_x_, dim_x_);

@@ -3,7 +3,7 @@
 
 CppLocalization: filters and slam algorithms implemented in C++
 ========
-This is a WIP C++ implementation of the `filterpy<https://github.com/rlabbe/filterpy>`_ library.
+This is a WIP C++ implementation of the _`filterpy<https://github.com/rlabbe/filterpy>` library.
 
 Filters:
 

@@ -637,6 +637,7 @@ TEST(UKFTest, SimulationTest) {
   std::normal_distribution<> gaussian_d{0,1};
 
   cv::namedWindow("ukf");
+  auto count = 0;
   while (time < 100.0) {
     time += dt;
 
@@ -660,7 +661,8 @@ TEST(UKFTest, SimulationTest) {
     hxEst.push_back(xEst);
     hz.push_back(z);
 
-    //visualization
+
+    // Visualization adapted from https://github.com/onlytailei/CppRobotics
     cv::Mat bg(700,1500, CV_8UC3, cv::Scalar(255,255,255));
     for(unsigned int j=0; j<hxDR.size(); j++){
 
@@ -686,6 +688,9 @@ TEST(UKFTest, SimulationTest) {
     rviz::ellipse_drawing(bg, PEst.block(0,0,2,2), xEst.head(2));
     cv::imshow("ukf", bg);
     cv::waitKey(5);
+
+    std::string int_count = std::to_string(count++);
+    cv::imwrite("/home/tasuku/ws/CppLocalization/src/video/ukf_"+int_count+".png", bg);
   }
 }
 

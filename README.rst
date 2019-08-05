@@ -9,8 +9,9 @@ This is a WIP C++ implementation of the filterpy_ library.
 
 Filters:
 
-- `Unscented Kalman Filter
-<https://github.com/surfertas/CppLocalization/blob/master/src/unscented_kalman_filter.cpp>`_
+- `Unscented Kalman Filter`_
+
+.. _`Unscentend Kalman Filter`: https://github.com/surfertas/CppLocalization/blob/master/src/unscented_kalman_filter.cpp
 
 Contribute
 ----------

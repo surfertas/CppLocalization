@@ -13,6 +13,12 @@ Filters:
 
 .. _Unscented Kalman Filter: https://github.com/surfertas/CppLocalization/blob/master/src/unscented_kalman_filter.cpp
 
+Setup
+----------
+  mkdir build && cd build
+  cmake ..
+  make
+
 Contribute
 ----------
 
